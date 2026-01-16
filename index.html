@@ -1,1 +1,478 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Die Tiefen des Ozeans</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: #000;
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(to bottom, #87CEEB 0%, #4A90E2 50%, #2E5C8A 100%);
+        }
+
+        .ship {
+            position: absolute;
+            top: 20%;
+            right: 10%;
+            font-size: 60px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .bird {
+            position: absolute;
+            font-size: 30px;
+            animation: fly 15s linear infinite;
+        }
+
+        .bird:nth-child(1) { top: 10%; animation-delay: 0s; }
+        .bird:nth-child(2) { top: 15%; animation-delay: 5s; }
+
+        @keyframes fly {
+            0% { left: -10%; }
+            100% { left: 110%; }
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.9);
+            padding: 20px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2E5C8A;
+        }
+
+        .stat-label {
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .sunlight-zone {
+            background: linear-gradient(to bottom, #2E5C8A 0%, #1E4D7A 100%);
+        }
+
+        .twilight-zone {
+            background: linear-gradient(to bottom, #1E4D7A 0%, #0D2645 100%);
+        }
+
+        .midnight-zone {
+            background: linear-gradient(to bottom, #0D2645 0%, #050F1F 100%);
+        }
+
+        .abyss-zone {
+            background: linear-gradient(to bottom, #050F1F 0%, #020510 100%);
+        }
+
+        .hadal-zone {
+            background: linear-gradient(to bottom, #020510 0%, #000000 100%);
+        }
+
+        .zone-content {
+            max-width: 800px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .zone-title {
+            font-size: 2.5em;
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid;
+            padding-bottom: 10px;
+        }
+
+        .sunlight-zone .zone-title { border-color: #4A90E2; }
+        .twilight-zone .zone-title { border-color: #6B5B95; }
+        .midnight-zone .zone-title { border-color: #2C3E50; }
+        .abyss-zone .zone-title { border-color: #8B0000; }
+        .hadal-zone .zone-title { border-color: #FF0000; color: #FF0000; }
+
+        .zone-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .info-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .info-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .info-title {
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #aaa;
+            font-size: 0.9em;
+        }
+
+        .zone-description {
+            color: #ddd;
+            line-height: 1.8;
+            margin: 20px 0;
+        }
+
+        .creatures {
+            margin-top: 30px;
+        }
+
+        .creatures-title {
+            color: #fff;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .creature-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .creature-tag {
+            background: rgba(255,255,255,0.15);
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 0.9em;
+        }
+
+        .animated-creature {
+            position: absolute;
+            font-size: 40px;
+            animation: swim 20s linear infinite;
+        }
+
+        @keyframes swim {
+            0% { left: -10%; }
+            100% { left: 110%; }
+        }
+
+        .fish { top: 60%; animation-duration: 15s; }
+        .jellyfish { top: 40%; animation-duration: 25s; opacity: 0.8; }
+        .submarine { top: 70%; animation-duration: 30s; }
+        .octopus { top: 50%; animation-duration: 20s; }
+        .angler { top: 65%; animation-duration: 18s; filter: brightness(1.5); }
+
+        .depth-indicator {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.9em;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .zone-title { font-size: 1.8em; }
+            .zone-content { padding: 20px; }
+            .depth-indicator { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="depth-indicator" id="depthIndicator">
+        Tiefe: <span id="currentDepth">0m</span>
+    </div>
+
+    <section class="section hero">
+        <div class="bird">🕊️</div>
+        <div class="bird">🕊️</div>
+        <div class="ship">🚢</div>
+        <h1>DIE TIEFEN DES OZEANS</h1>
+        <p style="color: #fff; font-size: 1.2em; text-align: center;">JETZT ABTAUCHEN</p>
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">71%</div>
+                <div class="stat-label">der Erdoberfläche<br>ist Ozean</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">des Ozeans ist<br>unerforscht</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section sunlight-zone">
+        <div class="animated-creature fish">🐠</div>
+        <div class="animated-creature fish" style="top: 55%; animation-delay: 5s;">🐟</div>
+        <div class="zone-content">
+            <h2 class="zone-title">DIE SONNENLICHTZONE</h2>
+            <div class="zone-info">
+                <div class="info-card">
+                    <div class="info-icon">📏</div>
+                    <div class="info-title">Tiefe</div>
+                    <div class="info-value">0-200m</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🌡️</div>
+                    <div class="info-title">Temperatur</div>
+                    <div class="info-value">12-30°C</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💡</div>
+                    <div class="info-title">Licht</div>
+                    <div class="info-value">100% Sonnenlicht</div>
+                </div>
+            </div>
+            <p class="zone-description">
+                In dieser obersten Schicht des Ozeans dringt genug Sonnenlicht ein, 
+                damit Photosynthese stattfinden kann. Hier leben 90% aller Meereslebewesen. 
+                Die Wassertemperatur ist warm und angenehm. Korallenriffe, Seegras und 
+                unzählige Fischarten bevölkern diese Zone.
+            </p>
+            <div class="creatures">
+                <div class="creatures-title">🐋 Typische Bewohner:</div>
+                <div class="creature-list">
+                    <span class="creature-tag">🐠 Tropische Fische</span>
+                    <span class="creature-tag">🐢 Meeresschildkröten</span>
+                    <span class="creature-tag">🐙 Tintenfische</span>
+                    <span class="creature-tag">🦈 Haie</span>
+                    <span class="creature-tag">🐬 Delfine</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section twilight-zone">
+        <div class="animated-creature jellyfish">🎐</div>
+        <div class="animated-creature submarine">🤿</div>
+        <div class="zone-content">
+            <h2 class="zone-title">DIE DÄMMERUNGSZONE</h2>
+            <div class="zone-info">
+                <div class="info-card">
+                    <div class="info-icon">📏</div>
+                    <div class="info-title">Tiefe</div>
+                    <div class="info-value">200-1000m</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🌡️</div>
+                    <div class="info-title">Temperatur</div>
+                    <div class="info-value">4-12°C</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💡</div>
+                    <div class="info-title">Licht</div>
+                    <div class="info-value">1% Sonnenlicht</div>
+                </div>
+            </div>
+            <p class="zone-description">
+                Die Dämmerungszone ist ein mysteriöser Übergangsbereich. Nur noch schwaches 
+                blaues Licht dringt hierher vor. Photosynthese ist nicht mehr möglich. 
+                Viele Tiere in dieser Zone haben Biolumineszenz entwickelt - sie können 
+                selbst Licht erzeugen. Der Druck nimmt erheblich zu.
+            </p>
+            <div class="creatures">
+                <div class="creatures-title">✨ Typische Bewohner:</div>
+                <div class="creature-list">
+                    <span class="creature-tag">🦑 Riesenkalmare</span>
+                    <span class="creature-tag">🎐 Quallen</span>
+                    <span class="creature-tag">🐡 Laternenfische</span>
+                    <span class="creature-tag">🦈 Tiefsehaie</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section midnight-zone">
+        <div class="animated-creature angler">🐟</div>
+        <div class="zone-content">
+            <h2 class="zone-title">DIE MITTERNACHTSZONE</h2>
+            <div class="zone-info">
+                <div class="info-card">
+                    <div class="info-icon">📏</div>
+                    <div class="info-title">Tiefe</div>
+                    <div class="info-value">1000-4000m</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🌡️</div>
+                    <div class="info-title">Temperatur</div>
+                    <div class="info-value">2-4°C</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💡</div>
+                    <div class="info-title">Licht</div>
+                    <div class="info-value">0% - völlige Dunkelheit</div>
+                </div>
+            </div>
+            <p class="zone-description">
+                Absolute Finsternis herrscht in dieser Zone. Kein Sonnenlicht erreicht 
+                diese Tiefen jemals. Der Wasserdruck ist extrem hoch. Die meisten Kreaturen 
+                hier erzeugen ihr eigenes Licht durch Biolumineszenz. Die Temperaturen 
+                sind eisig kalt und konstant.
+            </p>
+            <div class="creatures">
+                <div class="creatures-title">💀 Typische Bewohner:</div>
+                <div class="creature-list">
+                    <span class="creature-tag">🎣 Anglerfische</span>
+                    <span class="creature-tag">🦑 Vampirtintenfische</span>
+                    <span class="creature-tag">🐍 Viperfische</span>
+                    <span class="creature-tag">👾 Tiefseegarnelen</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section abyss-zone">
+        <div class="animated-creature octopus">🐙</div>
+        <div class="zone-content">
+            <h2 class="zone-title">DAS ABYSSEUM</h2>
+            <div class="zone-info">
+                <div class="info-card">
+                    <div class="info-icon">📏</div>
+                    <div class="info-title">Tiefe</div>
+                    <div class="info-value">4000-6000m</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🌡️</div>
+                    <div class="info-title">Temperatur</div>
+                    <div class="info-value">1-3°C</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <div class="info-title">Druck</div>
+                    <div class="info-value">400-600 bar</div>
+                </div>
+            </div>
+            <p class="zone-description">
+                Die Abgrundzone bedeckt etwa 75% des Meeresbodens. Der Wasserdruck ist 
+                hier 400-mal höher als an der Oberfläche. Die Lebensformen sind hochspezialisiert 
+                und oft bizarr. Nahrung ist extrem knapp - die meisten Tiere ernähren sich 
+                von herabsinkenden organischen Partikeln.
+            </p>
+            <div class="creatures">
+                <div class="creatures-title">👻 Typische Bewohner:</div>
+                <div class="creature-list">
+                    <span class="creature-tag">🐙 Dumbo-Oktopus</span>
+                    <span class="creature-tag">🦐 Riesenassel</span>
+                    <span class="creature-tag">🪱 Röhrenwürmer</span>
+                    <span class="creature-tag">🦀 Tiefseekrabben</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section hadal-zone">
+        <div class="zone-content">
+            <h2 class="zone-title">HADALZONE</h2>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="font-size: 5em; color: #ff0000;">⚠️</div>
+                <div style="color: #ff0000; font-size: 1.5em; margin-top: 10px;">MENSCHENFEINDLICH</div>
+            </div>
+            <div class="zone-info">
+                <div class="info-card">
+                    <div class="info-icon">📏</div>
+                    <div class="info-title">Tiefe</div>
+                    <div class="info-value">6000-11000m</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🌡️</div>
+                    <div class="info-title">Temperatur</div>
+                    <div class="info-value">1-4°C</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <div class="info-title">Druck</div>
+                    <div class="info-value">600-1100 bar</div>
+                </div>
+            </div>
+            <p class="zone-description">
+                Die tiefsten Gräben der Weltmeere. Der Marianengraben erreicht 11.034 Meter Tiefe. 
+                Der Wasserdruck ist über 1000-mal höher als an der Oberfläche - wie 50 
+                Jumbo-Jets auf Ihrem Daumennagel. Trotzdem existiert hier Leben! Nur 
+                speziell konstruierte Tauchfahrzeuge können diese extremen Tiefen erreichen.
+            </p>
+            <div class="creatures">
+                <div class="creatures-title">🔬 Extremophile Bewohner:</div>
+                <div class="creature-list">
+                    <span class="creature-tag">🐌 Tiefseeschnecken</span>
+                    <span class="creature-tag">🦐 Amphipoden</span>
+                    <span class="creature-tag">🐟 Scheibenbäuche</span>
+                    <span class="creature-tag">🦠 Extremophile Bakterien</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            
+            const maxDepth = 11000;
+            const scrollPercent = scrollPosition / (documentHeight - windowHeight);
+            const currentDepth = Math.round(scrollPercent * maxDepth);
+            
+            document.getElementById('currentDepth').textContent = currentDepth + 'm';
+        });
+    </script>
+</body>
+</html>
